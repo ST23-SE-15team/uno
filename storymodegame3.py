@@ -10,6 +10,7 @@ import pause
 import achievement
 import datetime
 import random
+import json
 pygame.init()
 
 def load_custom_keys():

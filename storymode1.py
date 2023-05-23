@@ -1,5 +1,6 @@
 import pygame
 import singlegame
+import storymodegame1
 
 pygame.init()
 
@@ -169,7 +170,7 @@ def story_map1():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     running = False
-                    import storymodegame1
+
                     storymodegame1.start_game()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     running = False

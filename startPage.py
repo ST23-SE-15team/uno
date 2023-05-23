@@ -6,13 +6,19 @@ import modeChoosepage
 import json
 import achievpage
 
+
+
 def load_custom_keys():
     global custom_keys
     with open('keySetting.json', 'r') as f:
         custom_keys = json.load(f)
         
-#'배경.mp3' 파일을 불러와서 재생합니다.
-pygame.mixer.music.load('./이채은/sound/배경.mp3')
+#sound_settings.json 파일에 있는 볼륨 크기를 불러와서 적용합니다.
+pygame.mixer.music.load('./이채은/sound/배경1.mp3')
+with open('sound_settings.json', 'r') as file:
+    sound_settings = json.load(file)
+volume_all = sound_settings['volume_all']
+pygame.mixer.music.set_volume(volume_all / 100)
 pygame.mixer.music.play(-1)
 
 

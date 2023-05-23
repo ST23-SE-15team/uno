@@ -12,6 +12,11 @@ import datetime
 
 pygame.init()
 
+def load_custom_keys():
+    global custom_keys
+    with open('keySetting.json', 'r') as f:
+        custom_keys = json.load(f)
+
 def show_color_popup(screen, width, height, font, colors, color_values):
     rects = []
 
@@ -443,7 +448,7 @@ def start_game():
     running = True
     # 게임 루프 실행
     while running:
-
+        load_custom_keys()
         # 0번 플레이어로 하고 나머지 컴퓨터로 하기
 
         # 컴퓨터인 경우 먼저하기
@@ -573,7 +578,7 @@ def start_game():
                     while True:
                         for event in pygame.event.get():
                             if event.type == pygame.KEYDOWN:
-                                if event.key == pygame.K_RETURN:
+                                if event.key == custom_keys['return']:
                                     return
 
                 else:
@@ -815,7 +820,7 @@ def start_game():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.key == pygame.K_LEFT:  # 왼쪽 화살표 키가 눌렸을 때
+                elif event.key == custom_keys['left']:  # 왼쪽 화살표 키가 눌렸을 때
                     selected_card = (selected_card - 1) % len(user_group)
                     # 화면다시 그리기
                     screen.blit(section3, (0, section1_height))
@@ -830,7 +835,7 @@ def start_game():
                     pygame.display.update()
 
 
-                elif event.key == pygame.K_RIGHT:  # 오른쪽 화살표 키가 눌렸을 때
+                elif event.key == custom_keys['right']:  # 오른쪽 화살표 키가 눌렸을 때
                     selected_card = (selected_card + 1) % len(user_group)
                     # 화면다시 그리기
                     screen.blit(section3, (0, section1_height))
@@ -847,7 +852,7 @@ def start_game():
                     pygame.display.update()
 
 
-                elif event.key == pygame.K_RETURN:  # enter 키가 눌렸을 때
+                elif event.key == custom_keys['return']:  # enter 키가 눌렸을 때
                     if playerTurn == 0:
 
                         for i, sprite in enumerate(user_group):
@@ -874,7 +879,7 @@ def start_game():
                                         while True:
                                             for event in pygame.event.get():
                                                 if event.type == pygame.KEYDOWN:
-                                                    if event.key == pygame.K_RETURN:
+                                                    if event.key == custom_keys['return']:
                                                         storymode2.story_map2()
                                     # 버린카드 특별카드 체크
                                     splitCard = discards[-1].split("_", 1)
@@ -1159,7 +1164,7 @@ def start_game():
                                     while True:
                                         for event in pygame.event.get():
                                             if event.type == pygame.KEYDOWN:
-                                                if event.key == pygame.K_RETURN:
+                                                if event.key == custom_keys['return']:
                                                     storymode2.story_map2()
 
 

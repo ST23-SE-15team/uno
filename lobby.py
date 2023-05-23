@@ -11,6 +11,11 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (200, 200, 200)
 
+def load_custom_keys():
+    global custom_keys
+    with open('keySetting.json', 'r') as f:
+        custom_keys = json.load(f)
+
 def lobby():
     win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     win.fill(WHITE)
@@ -42,6 +47,7 @@ def lobby():
 
     running = True
     while running:
+        load_custom_keys()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -49,11 +55,11 @@ def lobby():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.key == pygame.K_UP:
+                elif event.key == custom_keys['up']:
                     selected_item = (selected_item - 1) % len(mode_items)
-                elif event.key == pygame.K_DOWN:
+                elif event.key == custom_keys['down']:
                     selected_item = (selected_item + 1) % len(mode_items)
-                elif event.key == pygame.K_RETURN:
+                elif event.key == custom_keys['return']:
                     if selected_item == 0:
                         players = 2
 
@@ -148,6 +154,7 @@ def lobby():
 
         win.blit(cursor_img, cursor_rect)
         pygame.display.update()
+        
 
 def nickname_input():
     win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
@@ -176,7 +183,7 @@ def nickname_input():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.key == pygame.K_RETURN:
+                elif event.key == custom_keys['return']:
                     if nickname != "":
                         def save_nickname(nickname):
                             data = {

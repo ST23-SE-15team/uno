@@ -2,9 +2,6 @@ import pygame
 pygame.init()
 import singlegame
 import storymode1
-import json
-import lobby
-import multiRoom2
 
 # Set up the window
 WIN_WIDTH = 800
@@ -15,10 +12,6 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (200, 200, 200)
 
-def load_custom_keys():
-    global custom_keys
-    with open('keySetting.json', 'r') as f:
-        custom_keys = json.load(f)
 
 def modeChoose():
     # 게임화면의 크기 설정
@@ -59,9 +52,8 @@ def modeChoose():
     # Define menu items
     mode_items = [
     {"text": "Only Play", "pos": (WIN_WIDTH//2, 200)},
-    {"text": "Story Mode", "pos": (WIN_WIDTH//2, 310)},
-    {"text": "Multi Play", "pos": (WIN_WIDTH//2, 420)},
-    {"text": "Back", "pos": (WIN_WIDTH//2, 530)}
+    {"text": "Story Mode", "pos": (WIN_WIDTH//2, 320)},
+    {"text": "Back", "pos": (WIN_WIDTH//2, 440)}
 ]
 
     # Set up the cursor
@@ -77,7 +69,6 @@ def modeChoose():
     running = True
     while running:
         # Handle events
-        load_custom_keys()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -86,18 +77,16 @@ def modeChoose():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.key == custom_keys['up']:
+                elif event.key == pygame.K_UP:
                     selected_item = (selected_item - 1) % len(mode_items)
-                elif event.key == custom_keys['down']:
+                elif event.key == pygame.K_DOWN:
                     selected_item = (selected_item + 1) % len(mode_items)
-                elif event.key == custom_keys['return']:
+                elif event.key == pygame.K_RETURN:
                     if selected_item == 0:
-                        lobby.lobby()
+                        singlegame.start_game()
                     elif selected_item == 1:
                         storymode1.story_map1()
                     elif selected_item == 2:
-                        multiRoom2.run()
-                    elif selected_item == 3:
                         running = False
 
             elif event.type == pygame.MOUSEMOTION:
@@ -111,12 +100,10 @@ def modeChoose():
                         if button_rect.collidepoint(event.pos):
                             selected_item = i
                             if selected_item == 0:
-                                lobby.lobby()
+                                singlegame.start_game()
                             elif selected_item == 1:
                                 storymode1.story_map1()
                             elif selected_item == 2:
-                                multiRoom2.run()
-                            elif selected_item == 3:
                                 running = False
 
 
